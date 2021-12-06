@@ -1,4 +1,5 @@
 package africa.semicolon.bankapplication.services;
 
-public interface AccountService {
+public class AccountServiceImpl {
+
 }
