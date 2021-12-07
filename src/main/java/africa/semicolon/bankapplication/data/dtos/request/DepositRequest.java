@@ -1,2 +1,5 @@
-package africa.semicolon.bankapplication.data.dtos.request;public class DepositRequest {
+package africa.semicolon.bankapplication.data.dtos.request;
+
+public class DepositRequest {
+
 }
