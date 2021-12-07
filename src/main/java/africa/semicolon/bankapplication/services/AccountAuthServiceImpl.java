@@ -11,14 +11,16 @@ import africa.semicolon.bankapplication.repository.AccountRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class AccountAuthServiceImpl implements AccountAuthService{
+public class AccountAuthServiceImpl implements AccountAuthService {
 
 
     private static final AccountRepository accountRepository = new AccountRepositoryImpl();
     @Override
-    public RegisterAccountResponse registerAccount(RegisterAccountRequest registerAccountRequest) {
+    public RegisterAccountResponse registerAccount(RegisterAccountRequest registerAccountRequest) throws InvalidAccountNameException{
 
         if (registerAccountRequest.getAccountName() == null || registerAccountRequest.getAccountName().isEmpty()){
             throw new InvalidAccountNameException("Account Name must not be empty");
@@ -31,8 +33,8 @@ public class AccountAuthServiceImpl implements AccountAuthService{
         String existingAccountName = accountRepository.findAccountNumberByName(registerAccountRequest.getAccountName());
         if (existingAccountName != null){
             throw new AccountAlreadyExistException("Account Name " + registerAccountRequest.getAccountName() + "already exist");
-
         }
+
         Account account = Account.builder()
                 .accountNumber(accountNumberGenerator())
                 .accountName(registerAccountRequest.getAccountName())
@@ -40,8 +42,19 @@ public class AccountAuthServiceImpl implements AccountAuthService{
                 .accountBalance(registerAccountRequest.getInitialDeposit())
                 .build();
 
+
         accountRepository.save(account);
         return new RegisterAccountResponse(true, " Account Created Successfully", account.getAccountNumber());
+    }
+
+    @Override
+    public List<Account> findAllAccounts() {
+        return accountRepository.getAllAccountNumber();
+    }
+
+    @Override
+    public Optional<Account> findAccountByAccountNumber(String accountNumber) {
+        return accountRepository.findAccountByAccountNumber(accountNumber);
     }
 
     private String accountNumberGenerator(){
