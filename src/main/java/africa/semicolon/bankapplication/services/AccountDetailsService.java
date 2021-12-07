@@ -14,7 +14,9 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class AccountDetailsService implements UserDetailsService {
+
     private final AccountRepository accountRepository;
+
     @Override
     public UserDetails loadUserByUsername(String accountNumber) throws UsernameNotFoundException {
         Account account = accountRepository.findAccountByAccountNumber(accountNumber);
