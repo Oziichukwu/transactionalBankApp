@@ -19,7 +19,7 @@ public class Account {
 
     private String accountPassword;
 
-    private String accountBalance;
+    private Double accountBalance;
 
     private List<Transaction>transactions;
 
