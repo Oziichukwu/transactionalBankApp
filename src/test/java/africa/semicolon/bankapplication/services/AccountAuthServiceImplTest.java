@@ -61,16 +61,11 @@ class AccountAuthServiceImplTest {
     }
 
     @Test
-    void findAccountByAccountNumber() {
-    }
-
-    @Test
     void throwsExceptionWhenAccountNameAlreadyExist() {
         registerAccountTest();
 
         assertThrows(AccountAlreadyExistException.class, () -> registerAccountTest());
     }
-
 
 
     @Test
