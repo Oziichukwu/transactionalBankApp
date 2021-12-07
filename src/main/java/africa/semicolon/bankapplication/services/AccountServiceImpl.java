@@ -50,12 +50,36 @@ public class AccountServiceImpl implements AccountService{
         account.setAccountBalance(newBalance);
         accountRepository.save(account);
 
-        return new TransactionResponse(true, request.getWithdrawnAmount() +" successfully withdrawn from account and new account balance is "+ account.getAccountBalance());
+        return new TransactionResponse(true, request.getWithdrawnAmount() +" was successfully withdrawn from account and new account balance is "+ account.getAccountBalance());
     }
 
     @Override
     public TransactionResponse deposit(DepositRequest request) {
-        return null;
+        if (request.getAmount() < 1.00 || request.getAmount() > 1000000.00){
+            throw new IllegalArgumentException("Cannot deposit below #1.00 or #1000000.00");
+        }
+
+        Account account = accountRepository.findAccountByAccountNumber(request.getAccountNumber());
+        if (account == null){
+            throw new AccountDoesNotExistException("Account does not exist");
+        }
+
+        Double newBalance  = account.getAccountBalance() + request.getAmount();
+
+        Transaction transaction = Transaction.builder()
+                .transactionDate(LocalDate.now())
+                .transactionType(TransactionType.DEPOSIT.name())
+                .narration("transaction successful")
+                .amount(request.getAmount())
+                .accountBalance(newBalance)
+                .build();
+
+        account.addTransaction(transaction);
+        account.setAccountBalance(newBalance);
+        accountRepository.save(account);
+
+        return new TransactionResponse(true, request.getAccountNumber() + " was successfully deposited and new balance is " + account.getAccountBalance());
+
     }
 
     @Override
