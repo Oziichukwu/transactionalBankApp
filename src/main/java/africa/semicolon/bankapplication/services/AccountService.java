@@ -1,2 +1,5 @@
-package africa.semicolon.bankapplication.services;public interface AccountService {
+package africa.semicolon.bankapplication.services;
+
+public interface AccountService {
+
 }
