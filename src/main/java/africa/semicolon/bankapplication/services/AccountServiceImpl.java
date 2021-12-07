@@ -6,6 +6,7 @@ import africa.semicolon.bankapplication.data.dtos.response.AccountInfo;
 import africa.semicolon.bankapplication.data.dtos.response.TransactionResponse;
 import africa.semicolon.bankapplication.data.exceptions.AccountDoesNotExistException;
 import africa.semicolon.bankapplication.data.exceptions.ExcessWithdrawnAmountException;
+import africa.semicolon.bankapplication.data.exceptions.WrongPasswordException;
 import africa.semicolon.bankapplication.data.models.Account;
 import africa.semicolon.bankapplication.data.models.Transaction;
 import africa.semicolon.bankapplication.data.models.TransactionType;
@@ -50,7 +51,9 @@ public class AccountServiceImpl implements AccountService{
         account.setAccountBalance(newBalance);
         accountRepository.save(account);
 
-        return new TransactionResponse(true, request.getWithdrawnAmount() +" was successfully withdrawn from account and new account balance is "+ account.getAccountBalance());
+        return new TransactionResponse(true, request.getWithdrawnAmount()
+                +" was successfully withdrawn from account and new account balance is "
+                + account.getAccountBalance());
     }
 
     @Override
@@ -78,17 +81,34 @@ public class AccountServiceImpl implements AccountService{
         account.setAccountBalance(newBalance);
         accountRepository.save(account);
 
-        return new TransactionResponse(true, request.getAccountNumber() + " was successfully deposited and new balance is " + account.getAccountBalance());
+        return new TransactionResponse(true, request.getAccountNumber()
+                + " was successfully deposited and new balance is " + account.getAccountBalance());
 
     }
 
     @Override
     public AccountInfo getAccountInfo(String accountNumber, String password) {
-        return null;
+        Account account = accountRepository.findAccountByAccountNumber(accountNumber);
+
+        if (account == null){
+            throw new AccountDoesNotExistException("Account does not exist");
+        }
+
+        if (!password.equals(account.getAccountPassword())){
+            throw new WrongPasswordException("Wrong password");
+        }
+        return AccountInfo.builder()
+                .accountName(account.getAccountName())
+                .accountNumber(account.getAccountNumber())
+                .balance(account.getAccountBalance())
+                .build();
     }
 
     @Override
     public List<Transaction> getAllAccountTransaction(String accountNumber) {
-        return null;
+
+        Account account = accountRepository.findAccountByAccountNumber(accountNumber);
+
+        return account.getTransactions();
     }
 }
