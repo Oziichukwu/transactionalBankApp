@@ -9,17 +9,32 @@ import africa.semicolon.bankapplication.data.exceptions.InvalidAccountNameExcept
 import africa.semicolon.bankapplication.data.models.Account;
 import africa.semicolon.bankapplication.repository.AccountRepository;
 import africa.semicolon.bankapplication.repository.AccountRepositoryImpl;
+import africa.semicolon.bankapplication.security.jwt.util.JwtUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AccountAuthServiceImpl implements AccountAuthService {
 
 
     private static final AccountRepository accountRepository = new AccountRepositoryImpl();
+
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtUtil jwtUtil;
+
+    private final AccountDetailsService accountDetailsService;
+
+
     @Override
     public RegisterAccountResponse registerAccount(RegisterAccountRequest registerAccountRequest) throws InvalidAccountNameException{
 
@@ -68,8 +83,12 @@ public class AccountAuthServiceImpl implements AccountAuthService {
         return accountNumber;
     }
 
-    public String login(AuthenticationRequest authenticationRequest) throws BadCredentialsException {
+    public String login (AuthenticationRequest authenticationRequest) throws BadCredentialsException {
 
-        return null;
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getAccountNumber(),
+                authenticationRequest.getAccountPassword()));
+        UserDetails userDetails = accountDetailsService.loadUserByUsername(authenticationRequest.getAccountNumber());
+
+        return jwtUtil.generateToken(userDetails);
     }
 }
