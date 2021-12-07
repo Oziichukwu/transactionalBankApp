@@ -61,7 +61,7 @@ class AccountRepositoryImplTest {
     void findAccountByAccountNumber() {
         Account savedAccount = accountTestInfo();
 
-        assertEquals(savedAccount, accountRepository.findAccountByAccountNumber(savedAccount.getAccountNumber()).get());
+        assertEquals(savedAccount, accountRepository.findAccountByAccountNumber(savedAccount.getAccountNumber()));
     }
 
     @Test
