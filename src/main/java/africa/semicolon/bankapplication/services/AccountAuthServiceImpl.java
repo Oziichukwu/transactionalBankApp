@@ -1,5 +1,6 @@
 package africa.semicolon.bankapplication.services;
 
+import africa.semicolon.bankapplication.data.dtos.request.AuthenticationRequest;
 import africa.semicolon.bankapplication.data.dtos.request.RegisterAccountRequest;
 import africa.semicolon.bankapplication.data.dtos.response.RegisterAccountResponse;
 import africa.semicolon.bankapplication.data.exceptions.AccountAlreadyExistException;
@@ -8,11 +9,11 @@ import africa.semicolon.bankapplication.data.exceptions.InvalidAccountNameExcept
 import africa.semicolon.bankapplication.data.models.Account;
 import africa.semicolon.bankapplication.repository.AccountRepository;
 import africa.semicolon.bankapplication.repository.AccountRepositoryImpl;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AccountAuthServiceImpl implements AccountAuthService {
@@ -53,7 +54,7 @@ public class AccountAuthServiceImpl implements AccountAuthService {
     }
 
     @Override
-    public Optional<Account> findAccountByAccountNumber(String accountNumber) {
+    public Account findAccountByAccountNumber(String accountNumber) {
         return accountRepository.findAccountByAccountNumber(accountNumber);
     }
 
@@ -65,5 +66,10 @@ public class AccountAuthServiceImpl implements AccountAuthService {
 
         }
         return accountNumber;
+    }
+
+    public String login(AuthenticationRequest authenticationRequest) throws BadCredentialsException {
+
+        return null;
     }
 }
