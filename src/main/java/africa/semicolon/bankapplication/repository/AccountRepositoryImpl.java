@@ -18,9 +18,8 @@ public class AccountRepositoryImpl implements AccountRepository{
     }
 
     @Override
-    public Optional<Account> findAccountByAccountNumber(String accountNumber) {
-        if (database.containsKey(accountNumber)) return Optional.of(database.get(accountNumber));
-        return Optional.empty();
+    public Account findAccountByAccountNumber(String accountNumber) {
+        return database.get(accountNumber);
     }
 
     @Override
