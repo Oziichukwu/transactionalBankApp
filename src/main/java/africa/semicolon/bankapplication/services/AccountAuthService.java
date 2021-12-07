@@ -12,6 +12,6 @@ public interface AccountAuthService {
 
     List<Account> findAllAccounts();
 
-    Optional<Account>findAccountByAccountNumber(String accountNumber);
+    Account findAccountByAccountNumber(String accountNumber);
 
 }
