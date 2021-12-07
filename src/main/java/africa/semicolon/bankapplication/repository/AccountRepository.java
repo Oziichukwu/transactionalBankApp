@@ -9,7 +9,7 @@ public interface AccountRepository {
 
     Account save(Account account);
 
-    Optional<Account> findAccountByAccountNumber(String accountNumber);
+    Account findAccountByAccountNumber(String accountNumber);
 
     void deleteAccount(String accountNumber);
 
