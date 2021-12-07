@@ -29,7 +29,7 @@ class AccountRepositoryImplTest {
         account.setAccountName("helen micheal");
         account.setAccountNumber(getAccountNumber());
         account.setAccountPassword("456ugc");
-        account.setAccountBalance("570.00");
+        account.setAccountBalance(570.00);
 
          Account savedAccount = accountRepository.save(account);
         System.out.println(getAccountNumber());
@@ -45,7 +45,7 @@ class AccountRepositoryImplTest {
         account.setAccountName("helen micheal");
         account.setAccountNumber(getAccountNumber());
         account.setAccountPassword("456ugc");
-        account.setAccountBalance("570.00");
+        account.setAccountBalance(570.00);
 
         return accountRepository.save(account);
     }
