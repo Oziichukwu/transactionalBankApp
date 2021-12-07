@@ -6,6 +6,8 @@ import africa.semicolon.bankapplication.data.exceptions.AccountAlreadyExistExcep
 import africa.semicolon.bankapplication.data.exceptions.InsufficientInitialDepositException;
 import africa.semicolon.bankapplication.data.exceptions.InvalidAccountNameException;
 import africa.semicolon.bankapplication.data.models.Account;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.security.SecureRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class AccountAuthServiceImplTest {
     private static AccountAuthService accountAuthService;
