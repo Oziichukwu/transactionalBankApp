@@ -18,12 +18,13 @@ import java.security.SecureRandom;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@AllArgsConstructor
 class AccountAuthServiceImplTest {
     private static AccountAuthService accountAuthService;
 
     @BeforeEach
     void setUp() {
-        accountAuthService = new AccountAuthServiceImpl();
+        AccountAuthService accountAuthService;
     }
 
     @AfterEach
