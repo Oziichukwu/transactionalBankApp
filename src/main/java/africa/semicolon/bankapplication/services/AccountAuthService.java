@@ -4,6 +4,6 @@ import africa.semicolon.bankapplication.data.dtos.request.RegisterAccountRequest
 import africa.semicolon.bankapplication.data.dtos.response.RegisterAccountResponse;
 
 public interface AccountAuthService {
-    RegisterAccountRequest registerAccount(RegisterAccountResponse registerAccountResponse);
+    RegisterAccountResponse registerAccount(RegisterAccountRequest registerAccountRequest);
 
 }
